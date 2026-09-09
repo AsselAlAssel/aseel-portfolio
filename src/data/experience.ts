@@ -1,16 +1,16 @@
 import type { Experience } from '../types/portfolio';
 
 export const experience: Experience[] = [
-  {
-    id: 'proactives',
-    company: 'Proactives-IT',
-    role: 'Frontend Engineer',
-    period: 'Aug 2026 — Present',
-    location: 'Remote',
-    description:
-      'Building responsive enterprise interfaces with React and TypeScript, focused on reusable components and maintainable frontend architecture.',
-    current: true,
-  },
+  // {
+  //   id: 'proactives',
+  //   company: 'Proactives-IT',
+  //   role: 'Frontend Engineer',
+  //   period: 'Aug 2026 — Present',
+  //   location: 'Remote',
+  //   description:
+  //     'Building responsive enterprise interfaces with React and TypeScript, focused on reusable components and maintainable frontend architecture.',
+  //   current: true,
+  // },
   {
     id: 'aui',
     company: 'Augmented Intelligence (AUI)',
