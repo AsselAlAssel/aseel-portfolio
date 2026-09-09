@@ -3,10 +3,9 @@ import type { Project } from '../../types/portfolio';
 
 interface ProjectPreviewProps {
   project: Project;
-  eager?: boolean;
 }
 
-export function ProjectPreview({ project, eager = false }: ProjectPreviewProps) {
+export function ProjectPreview({ project }: ProjectPreviewProps) {
   if (project.image) {
     return (
       <div className="project-preview project-preview-image">
@@ -14,8 +13,9 @@ export function ProjectPreview({ project, eager = false }: ProjectPreviewProps) 
           src={project.image}
           alt={project.imageAlt ?? `${project.title} project preview`}
           className="h-full w-full object-cover object-top"
-          loading={eager ? 'eager' : 'lazy'}
+          loading="lazy"
           decoding="async"
+          fetchPriority="low"
         />
         <div className="project-image-sheen" aria-hidden="true" />
       </div>
@@ -42,7 +42,10 @@ export function ProjectPreview({ project, eager = false }: ProjectPreviewProps) 
         </div>
         <div className="space-y-3">
           {[1, 2].map((item) => (
-            <div key={item} className="rounded-2xl border border-border bg-background/75 p-4 shadow-xl">
+            <div
+              key={item}
+              className="rounded-2xl border border-border bg-background/75 p-4 shadow-xl"
+            >
               <div className="flex items-center gap-2">
                 <div className="h-7 w-7 rounded-full bg-cyan/15" />
                 <div className="h-1.5 w-16 rounded-full bg-primary/45" />

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import type { PropsWithChildren } from 'react';
 import { fadeUp, viewportOnce } from '../../utils/motion';
 
@@ -9,7 +9,7 @@ interface RevealProps extends PropsWithChildren {
 
 export function Reveal({ children, className, delay = 0 }: RevealProps) {
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={fadeUp}
       initial="hidden"
@@ -18,6 +18,6 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
       transition={{ delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

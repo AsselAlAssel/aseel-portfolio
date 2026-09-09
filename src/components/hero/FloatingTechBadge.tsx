@@ -1,11 +1,13 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
+import { useParallaxStyle } from '../../hooks/useParallaxStyle';
 
 interface FloatingTechBadgeProps {
   label: string;
   mark: string;
   className: string;
-  x: number;
-  y: number;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
   depth: number;
   delay: number;
 }
@@ -19,10 +21,12 @@ export function FloatingTechBadge({
   depth,
   delay,
 }: FloatingTechBadgeProps) {
+  const parallaxStyle = useParallaxStyle(x, y, depth, depth);
+
   return (
-    <motion.div
+    <m.div
       className={`tech-badge glass-panel ${className}`}
-      style={{ x: x * depth, y: y * depth }}
+      style={parallaxStyle}
       initial={{ opacity: 0, scale: 0.82, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
@@ -32,6 +36,6 @@ export function FloatingTechBadge({
         {mark}
       </span>
       <span className="text-xs font-medium text-primary">{label}</span>
-    </motion.div>
+    </m.div>
   );
 }

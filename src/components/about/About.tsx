@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import aboutImage from '../../assets/images/aseel-about.webp';
 import { Container } from '../common/Container';
 import { Reveal } from '../common/Reveal';
@@ -9,11 +9,15 @@ const qualities = ['Problem Solver', 'Team Player', 'Fast Learner', 'Detail Orie
 
 export function About() {
   return (
-    <section id="about" className="section-shell relative overflow-hidden" aria-labelledby="about-title">
+    <section
+      id="about"
+      className="section-shell deferred-section relative overflow-hidden"
+      aria-labelledby="about-title"
+    >
       <div className="section-orb -right-48 top-1/3 bg-violet/10" aria-hidden="true" />
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-10">
-          <motion.figure
+          <m.figure
             className="relative mx-auto w-full max-w-md lg:col-span-4 lg:mx-0 xl:col-span-3"
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -29,19 +33,33 @@ export function About() {
                 width="900"
                 height="1150"
                 loading="lazy"
+                decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/65 via-transparent to-transparent" aria-hidden="true" />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-background/65 via-transparent to-transparent"
+                aria-hidden="true"
+              />
             </div>
-          </motion.figure>
+          </m.figure>
 
           <Reveal className="lg:col-span-8 xl:col-span-4">
             <p className="eyebrow">About Me</p>
             <h2 id="about-title" className="about-title mt-4">
-              Clean code.<br />Thoughtful design.<br /><span className="gradient-text">Better experiences.</span>
+              Clean code.
+              <br />
+              Thoughtful design.
+              <br />
+              <span className="gradient-text">Better experiences.</span>
             </h2>
             <div className="mt-6 space-y-4 text-base leading-7 text-secondary">
-              <p>I&apos;m Aseel, a Frontend Engineer focused on turning ideas into real, user-focused products.</p>
-              <p>I care about clean code, scalable frontend architecture, thoughtful design, performance, and solving meaningful problems.</p>
+              <p>
+                I&apos;m Aseel, a Frontend Engineer focused on turning ideas into real, user-focused
+                products.
+              </p>
+              <p>
+                I care about clean code, scalable frontend architecture, thoughtful design,
+                performance, and solving meaningful problems.
+              </p>
             </div>
             <ul className="mt-7 grid grid-cols-2 gap-x-4 gap-y-3">
               {qualities.map((quality) => (

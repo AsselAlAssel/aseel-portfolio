@@ -1,16 +1,20 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
 import { Code2 } from 'lucide-react';
+import { useParallaxStyle } from '../../hooks/useParallaxStyle';
 
 interface FloatingCodeWindowProps {
-  x: number;
-  y: number;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
 }
 
 export function FloatingCodeWindow({ x, y }: FloatingCodeWindowProps) {
+  const parallaxStyle = useParallaxStyle(x, y, -12, -10);
+
   return (
-    <motion.div
+    <m.div
       className="floating-code glass-panel"
-      style={{ x: x * -12, y: y * -10 }}
+      style={parallaxStyle}
       initial={{ opacity: 0, y: 18, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
@@ -27,16 +31,18 @@ export function FloatingCodeWindow({ x, y }: FloatingCodeWindowProps) {
       <pre className="overflow-hidden p-4 font-mono text-[11px] leading-5 sm:text-xs">
         <code>
           <span className="text-violet">import</span> <span className="text-primary">React</span>{' '}
-          <span className="text-violet">from</span> <span className="text-cyan">&apos;react&apos;</span>;
-          {'\n\n'}
-          <span className="text-blue">const</span> <span className="text-primary">Portfolio</span> = () <span className="text-violet">=&gt;</span> {'{'}
+          <span className="text-violet">from</span>{' '}
+          <span className="text-cyan">&apos;react&apos;</span>;{'\n\n'}
+          <span className="text-blue">const</span> <span className="text-primary">Portfolio</span> =
+          () <span className="text-violet">=&gt;</span> {'{'}
           {'\n  '}
-          <span className="text-violet">return</span> (
-          {'\n    '}&lt;<span className="text-cyan">BuildSomethingGreat</span> /&gt;
+          <span className="text-violet">return</span> ({'\n    '}&lt;
+          <span className="text-cyan">BuildSomethingGreat</span> /&gt;
           {'\n  '});
-          {'\n'}{'}'};
+          {'\n'}
+          {'}'};
         </code>
       </pre>
-    </motion.div>
+    </m.div>
   );
 }

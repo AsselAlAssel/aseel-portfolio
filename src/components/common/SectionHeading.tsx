@@ -19,7 +19,9 @@ export function SectionHeading({
       <p className="eyebrow">{eyebrow}</p>
       <h2 className="section-title mt-4">{title}</h2>
       {description ? (
-        <p className={`mt-5 max-w-2xl text-base leading-7 text-secondary ${align === 'center' ? 'mx-auto' : ''}`}>
+        <p
+          className={`mt-5 max-w-2xl text-base leading-7 text-secondary ${align === 'center' ? 'mx-auto' : ''}`}
+        >
           {description}
         </p>
       ) : null}

@@ -11,7 +11,7 @@ export function useActiveSection(sectionIds: string[]): string {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActiveSection(visible.target.id);
       },
-      { rootMargin: '-35% 0px -55%', threshold: [0, 0.15, 0.4] },
+      { rootMargin: '-35% 0px -55%', threshold: [0, 0.15, 0.4] }
     );
 
     sectionIds.forEach((id) => {

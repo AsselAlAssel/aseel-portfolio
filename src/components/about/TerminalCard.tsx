@@ -1,25 +1,9 @@
-import { FormEvent, useId, useState } from 'react';
-
-const commandResponses: Record<string, string> = {
-  help: 'Try: projects · skills · contact',
-  projects: 'Mohammed Soboh, eDentist.ai, GuruHub, and a social platform.',
-  skills: 'React · Next.js · TypeScript · Tailwind CSS',
-  contact: 'aseelalali81@gmail.com',
-};
+import { useId } from 'react';
+import { useTerminal } from '../../hooks/useTerminal';
 
 export function TerminalCard() {
   const inputId = useId();
-  const [command, setCommand] = useState('');
-  const [history, setHistory] = useState<string[]>([]);
-
-  const submitCommand = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const normalized = command.trim().toLowerCase();
-    if (!normalized) return;
-    const response = commandResponses[normalized] ?? 'Command not found. Type “help”.';
-    setHistory((current) => [...current.slice(-2), `> ${normalized}`, response]);
-    setCommand('');
-  };
+  const { command, history, setCommand, submitCommand } = useTerminal();
 
   return (
     <div className="terminal glass-panel" data-cursor="code">
@@ -29,22 +13,46 @@ export function TerminalCard() {
           <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
         </div>
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-secondary">aseel.ts</span>
+        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-secondary">
+          aseel.ts
+        </span>
       </div>
       <div className="min-h-[260px] p-5 font-mono text-xs leading-6 sm:p-7 sm:text-sm">
-        <p><span className="text-violet">const</span> <span className="text-blue">developer</span> <span className="text-primary">= {'{'}</span></p>
-        <p className="pl-4"><span className="text-cyan">name</span>: <span className="text-emerald-300">&quot;Aseel Hussain Al-Ali&quot;</span>,</p>
-        <p className="pl-4"><span className="text-cyan">role</span>: <span className="text-emerald-300">&quot;Frontend Engineer&quot;</span>,</p>
-        <p className="pl-4"><span className="text-cyan">location</span>: <span className="text-emerald-300">&quot;Jenin, Palestine&quot;</span>,</p>
-        <p className="pl-4"><span className="text-cyan">mindset</span>: <span className="text-emerald-300">&quot;Always learning&quot;</span>,</p>
+        <p>
+          <span className="text-violet">const</span> <span className="text-blue">developer</span>{' '}
+          <span className="text-primary">= {'{'}</span>
+        </p>
+        <p className="pl-4">
+          <span className="text-cyan">name</span>:{' '}
+          <span className="text-emerald-300">&quot;Aseel Hussain Al-Ali&quot;</span>,
+        </p>
+        <p className="pl-4">
+          <span className="text-cyan">role</span>:{' '}
+          <span className="text-emerald-300">&quot;Frontend Engineer&quot;</span>,
+        </p>
+        <p className="pl-4">
+          <span className="text-cyan">location</span>:{' '}
+          <span className="text-emerald-300">&quot;Jenin, Palestine&quot;</span>,
+        </p>
+        <p className="pl-4">
+          <span className="text-cyan">mindset</span>:{' '}
+          <span className="text-emerald-300">&quot;Always learning&quot;</span>,
+        </p>
         <p className="text-primary">{'}'};</p>
         <div className="mt-5 min-h-[54px] text-secondary" aria-live="polite">
           {history.map((line, index) => (
-            <p key={`${line}-${index}`} className={line.startsWith('>') ? 'text-cyan' : ''}>{line}</p>
+            <p key={`${line}-${index}`} className={line.startsWith('>') ? 'text-cyan' : ''}>
+              {line}
+            </p>
           ))}
         </div>
-        <form onSubmit={submitCommand} className="mt-3 flex items-center gap-2 border-t border-border pt-4">
-          <label htmlFor={inputId} className="text-cyan">&gt;</label>
+        <form
+          onSubmit={submitCommand}
+          className="mt-3 flex items-center gap-2 border-t border-border pt-4"
+        >
+          <label htmlFor={inputId} className="text-cyan">
+            &gt;
+          </label>
           <input
             id={inputId}
             value={command}

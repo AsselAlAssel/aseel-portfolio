@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
-import type { PointerEvent } from 'react';
+import { m } from 'framer-motion';
+import { useProjectGlow } from '../../hooks/useProjectGlow';
 import type { Project } from '../../types/portfolio';
 import { ProjectPreview } from './ProjectPreview';
 
@@ -11,14 +11,10 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, className = '', onOpen }: ProjectCardProps) {
-  const updateBorderGlow = (event: PointerEvent<HTMLElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`);
-    event.currentTarget.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`);
-  };
+  const updateBorderGlow = useProjectGlow();
 
   return (
-    <motion.article
+    <m.article
       className={`project-card group relative overflow-hidden rounded-[1.75rem] border border-border bg-surface/55 ${className}`}
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +27,7 @@ export function ProjectCard({ project, className = '', onOpen }: ProjectCardProp
       <div className="project-border-glow" aria-hidden="true" />
       <div className="overflow-hidden border-b border-border/70">
         <div className="transition-transform duration-500 ease-out group-hover:scale-[1.02] group-hover:-translate-y-0.5">
-          <ProjectPreview project={project} eager={project.featured} />
+          <ProjectPreview project={project} />
         </div>
       </div>
       <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6 lg:p-7">
@@ -41,12 +37,17 @@ export function ProjectCard({ project, className = '', onOpen }: ProjectCardProp
             {project.category}
           </span>
         </div>
-        <h3 className="mt-5 text-2xl font-bold tracking-tight text-primary sm:text-3xl">{project.title}</h3>
+        <h3 className="mt-5 text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          {project.title}
+        </h3>
         <p className="mt-3 max-w-2xl text-base leading-7 text-secondary">{project.description}</p>
         {project.technologies.length ? (
           <ul className="mt-5 flex flex-wrap gap-2" aria-label={`${project.title} technologies`}>
             {project.technologies.map((technology) => (
-              <li key={technology} className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-secondary">
+              <li
+                key={technology}
+                className="rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs text-secondary"
+              >
                 {technology}
               </li>
             ))}
@@ -63,6 +64,6 @@ export function ProjectCard({ project, className = '', onOpen }: ProjectCardProp
           <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
         </button>
       </div>
-    </motion.article>
+    </m.article>
   );
 }

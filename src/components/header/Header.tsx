@@ -1,7 +1,7 @@
 import { Menu, Moon, Sun, X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useActiveSection } from '../../hooks/useActiveSection';
+import { useHeaderControls } from '../../hooks/useHeaderControls';
 import { Container } from '../common/Container';
 import { GlowButton } from '../common/GlowButton';
 
@@ -12,23 +12,15 @@ const links = [
   { label: 'About', id: 'about' },
   { label: 'Contact', id: 'contact' },
 ];
+const sectionIds = links.map((link) => link.id);
 
 export function Header() {
-  const sectionIds = useMemo(() => links.map((link) => link.id), []);
   const activeSection = useActiveSection(sectionIds);
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [lightTheme, setLightTheme] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, 'change', (latest) => setScrolled(latest > 32));
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = lightTheme ? 'light' : 'dark';
-  }, [lightTheme]);
+  const { closeMenu, lightTheme, menuOpen, scrolled, toggleMenu, toggleTheme } =
+    useHeaderControls();
 
   return (
-    <motion.header
+    <m.header
       initial={{ opacity: 0, y: -14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55 }}
@@ -37,11 +29,14 @@ export function Header() {
       <Container>
         <div
           className={`flex items-center justify-between rounded-2xl px-4 transition-all duration-300 sm:px-5 ${
-            scrolled ? 'border border-border bg-background/80 py-2.5 shadow-2xl backdrop-blur-xl' : 'py-2'
+            scrolled
+              ? 'border border-border bg-background/80 py-2.5 shadow-2xl backdrop-blur-xl'
+              : 'py-2'
           }`}
         >
-          <a href="#home" className="font-mono text-base font-semibold tracking-tight text-primary" aria-label="Aseel home">
-            <span className="text-cyan">&lt;</span>Aseel<span className="text-secondary">.Dev</span><span className="text-violet">/&gt;</span>
+          <a href="#home" className="font-mono text-base font-semibold tracking-tight text-primary">
+            <span className="text-cyan">&lt;</span>Aseel<span className="text-secondary">.Dev</span>
+            <span className="text-violet">/&gt;</span>
           </a>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
@@ -64,7 +59,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => setLightTheme((current) => !current)}
+              onClick={toggleTheme}
               className="grid h-10 w-10 place-items-center rounded-full border border-border bg-surface/60 text-secondary transition hover:border-cyan/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               aria-label={`Switch to ${lightTheme ? 'dark' : 'light'} theme`}
             >
@@ -75,7 +70,7 @@ export function Header() {
             </GlowButton>
             <button
               type="button"
-              onClick={() => setMenuOpen((current) => !current)}
+              onClick={toggleMenu}
               className="grid h-10 w-10 place-items-center rounded-full border border-border text-primary lg:hidden"
               aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
               aria-expanded={menuOpen}
@@ -86,12 +81,15 @@ export function Header() {
         </div>
 
         {menuOpen ? (
-          <nav className="mt-2 rounded-2xl border border-border bg-background/95 p-3 shadow-2xl backdrop-blur-xl lg:hidden" aria-label="Mobile navigation">
+          <nav
+            className="mt-2 rounded-2xl border border-border bg-background/95 p-3 shadow-2xl backdrop-blur-xl lg:hidden"
+            aria-label="Mobile navigation"
+          >
             {links.map((link) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
-                onClick={() => setMenuOpen(false)}
+                onClick={closeMenu}
                 className="block rounded-xl px-4 py-3 text-base text-secondary transition hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
                 {link.label}
@@ -100,6 +98,6 @@ export function Header() {
           </nav>
         ) : null}
       </Container>
-    </motion.header>
+    </m.header>
   );
 }
