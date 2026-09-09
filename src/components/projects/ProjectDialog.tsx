@@ -1,4 +1,5 @@
 import { ArrowUpRight, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import { useProjectDialog } from '../../hooks/useProjectDialog';
 import type { Project } from '../../types/portfolio';
 
@@ -10,9 +11,9 @@ interface ProjectDialogProps {
 export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
   const panelRef = useProjectDialog(onClose);
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] grid place-items-center bg-[rgb(1_5_10/0.78)] p-4 backdrop-blur-[10px] sm:p-6"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-[rgb(1_5_10/0.78)] p-4 backdrop-blur-[10px] sm:items-center sm:p-6"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
       <div
@@ -21,7 +22,7 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
         aria-modal="true"
         aria-labelledby={`project-dialog-${project.id}`}
         tabIndex={-1}
-        className="project-dialog w-[min(92vw,64rem)] max-h-[88dvh] overflow-y-auto overscroll-contain rounded-[1.75rem] border border-border bg-surface text-primary shadow-2xl outline-none"
+        className="project-dialog my-auto max-h-[calc(100dvh-2rem)] w-[min(92vw,64rem)] overflow-y-auto overscroll-contain rounded-[1.75rem] border border-border bg-surface text-primary shadow-2xl outline-none sm:max-h-[calc(100dvh-3rem)]"
       >
         <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-border bg-surface/90 px-5 py-4 backdrop-blur-xl sm:px-7">
           <div>
@@ -84,6 +85,7 @@ export function ProjectDialog({ project, onClose }: ProjectDialogProps) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
