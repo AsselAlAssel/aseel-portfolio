@@ -38,4 +38,13 @@ export const experience: Experience[] = [
     description:
       'Developed responsive web and cross-platform mobile applications with React and React Native, integrating APIs and third-party services.',
   },
+  {
+    id: 'foothill',
+    company: 'Foothill Technology Solutions',
+    role: 'Frontend Trainee',
+    period: 'Feb 2022 — Jun 2022',
+    location: 'Nablus, Palestine',
+    description:
+      'Trained in HTML, CSS, JavaScript, and React, with experience in unit testing and functional programming.',
+  },
 ];
