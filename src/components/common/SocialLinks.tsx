@@ -16,7 +16,7 @@ interface SocialLinksProps {
 
 export function SocialLinks({ compact = false }: SocialLinksProps) {
   return (
-    <div className="flex flex-wrap gap-3" aria-label="Social links">
+    <div className="flex flex-wrap justify-center gap-3" aria-label="Social links">
       {socials.map((social) => {
         const Icon = icons[social.icon];
         const external = social.url.startsWith('http');
